@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vroom - Massimo Trimboli</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="1450px" height="685px" style="border: 1px solid #000;">Your browser doesnt support the "canvas" element</canvas>
+    
+    <script>
+        //définir script à utliliseer seelon le nombre de joueurs
+        //demander nombre de joueurs
+        let nbJoueurs = Number(prompt("Choisir le nombre de joueurs. 1 ou 2?"));
+        
+        if(isNaN(nbJoueurs) || nbJoueurs < 1 || nbJoueurs > 2) {
+            alert("nombre de joueurs doit être soit 1 ou 2")
+        }
+        if (nbJoueurs == 1){
+            //creer et placer les elements scripts pour 1 joueur
+            let mouvement1 = document.createElement("script");
+            mouvement1.src = "js/mouvement1.js";
+            document.body.appendChild(mouvement1);
+            
+            let ia = document.createElement("script");
+            ia.src = "js/ia.js";
+            document.body.appendChild(ia);
+        } else if (nbJoueurs == 2) {
+            //creer et placer les elements scripts pour 2 joueur
+            let mouvement2 = document.createElement("script");
+            mouvement2.src = "js/mouvement2.js";
+            document.body.appendChild(mouvement2)
+        }
+    </script>
+
+    <script src="js/pewpew.js"></script>
+    <script src="js/collisions.js"></script>
+
+    <script>
+        //récuperer balise canvas et context
+        let leCanvas = document.querySelector("canvas");
+        let ctx = leCanvas.getContext("2d");
+
+        //image au debut du jeu
+        leCanvas.style.backgroundImage = "url(image/debut" + nbJoueurs + ".jpg)"
+
+        //setInterval(actualiserJeu, 1000/60);
+        let intervalID
+
+        leCanvas.addEventListener("click", commencerJeu)
+
+        function commencerJeu() {
+            //changer le fond
+            leCanvas.style.backgroundImage = "url(image/arriereJeu.jpg)"
+
+            //comencer les intarval
+            intervalID = setInterval(actualiserJeu, 1000/60)
+            intervalAnimID = setInterval(animPew, 1000/24)
+
+            //enlever le event listener
+            leCanvas.removeEventListener("click", commencerJeu)
+        }
+
+        //fonction pour actualiser le jeu
+        function actualiserJeu() {
+        ctx.clearRect (0, 0, leCanvas.width, leCanvas.height);
+        deplacerVoitures(voitureRouge, voitureBleu);
+        deplacerPew();
+        colisionVoitures();
+        colisionPew();
+        afficherVie()
+        gererFin();
+        }
+
+        //afficher la vie
+        let vie = 10;
+
+        function afficherVie() {
+            ctx.textBaseline = "top"
+            ctx.textAlign = "right"
+            ctx.font = "30px Arial"
+            ctx.fillStyle = "white"
+            ctx.strokeStyle = "black"
+
+            //dessiner texte
+            ctx.fillText("Vie bleu: " + vie, leCanvas.width, 0)
+            ctx.strokeText("Vie bleu: " + vie, leCanvas.width, 0)
+        }
+
+        fin = false;
+        function gererFin() {
+            if (vie <= 0) {
+                clearInterval(intervalID);
+                clearInterval(intervalAnimID);
+
+                fin = true;
+
+                //text fin jeu
+                ctx.textBaseline = "middle";
+                ctx.textAlign = "center";
+                ctx.fillStyle = "red";
+                ctx.strokeStyle = "white";
+                ctx.font = "130px Arial";
+            
+                //dessiner texte
+                ctx.fillText("FIN", leCanvas.width/2, leCanvas.height/2 - 75);
+                ctx.strokeText("FIN", leCanvas.width/2, leCanvas.height/2 - 75);
+            
+                ctx.fillText('"R" pour rejouer', leCanvas.width/2, leCanvas.height/2 + 75);
+                ctx.strokeText('"R" pour rejouer', leCanvas.width/2, leCanvas.height/2 + 75);
+            }
+        }
+    </script>
+
+</body>
+</html>
