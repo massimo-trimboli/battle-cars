@@ -55,6 +55,10 @@
         //setInterval(actualiserJeu, 1000/60);
         let intervalID
 
+        //charger les sons
+        let sonPew = new Audio();
+        sonPew.src = "audio/sonPew.mp3";
+
         leCanvas.addEventListener("click", commencerJeu)
 
         function commencerJeu() {

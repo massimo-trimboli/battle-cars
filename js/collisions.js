@@ -17,6 +17,9 @@ function colisionPew() {
             let tousPew = lesPew.length;
             lesPew.splice(0, tousPew);
             vie--;
+
+            //jouer un son
+            sonPew.play();
         }
     }
 }
