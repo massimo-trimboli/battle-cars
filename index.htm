@@ -46,7 +46,7 @@
 
     <script src="js/pewpew.js"></script>
     <script src="js/collisions.js"></script>
-
+    
     <script>
         //récuperer balise canvas et context
         let leCanvas = document.querySelector("canvas");
@@ -61,12 +61,10 @@
         //charger les sons
         let sonPew = new Audio();
         sonPew.src = "audio/sonPew.mp3";
-
         let musique = new Audio();
-        musique.src = "audio/Massimo - Vroom.mp3";
-        musique.loop = true;
-
-
+        musique.src = "audio/Massimo - Vroom.mp3"
+        musique.loop = true;6
+        
         //gestionaire d'évenement
         leCanvas.addEventListener("click", commencerJeu)
 
