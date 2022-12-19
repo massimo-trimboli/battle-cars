@@ -19,6 +19,7 @@ function colisionPew() {
             vie--;
 
             //jouer un son
+            sonPew.currentTime = 0;
             sonPew.play();
         }
     }
