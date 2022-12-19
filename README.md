@@ -1,3 +1,3 @@
 # vroom
 
-page: https://massimo-trimboli.github.io/vroom/
+page: https://massimo-trimboli.github.io/battle-cars/
